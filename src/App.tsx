@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
 import { SpeechData } from "./types/types";
+import {
+  SPEECH_RECOGNITION_ERRORS,
+  BROWSER_MESSAGES,
+  UI_ERRORS,
+} from "./const/errors";
 
 const App: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -51,13 +56,12 @@ const App: React.FC = () => {
           setIsRecording(false);
         };
 
-        recognitionRef.current.onend = () => {
-          // Speech recognition ended
-        };
-
         setSpeechSupported(true);
       } catch (error) {
-        console.error("Failed to initialize speech recognition:", error);
+        console.error(
+          SPEECH_RECOGNITION_ERRORS.SPEECH_RECOGNITION_INITIALIZATION_FAILED,
+          error
+        );
         setSpeechSupported(false);
       }
     } else {
@@ -119,7 +123,7 @@ const App: React.FC = () => {
           <div className="transcript-section">
             <h3>Your Speech</h3>
             <div className="transcript-box">
-              {transcript || "Your speech will appear here..."}
+              {transcript || UI_ERRORS.TRANSCRIPT_EMPTY}
             </div>
           </div>
 
@@ -127,7 +131,8 @@ const App: React.FC = () => {
             <h3>Speech History</h3>
             <div className="history-list">
               {speechHistory
-                .slice(-3)
+                // TODO: Add a button to clear history and the # of items to show
+                //.slice(-3)
                 .reverse()
                 .map((item, index) => (
                   <div key={index} className="history-item">
@@ -148,8 +153,8 @@ const App: React.FC = () => {
 
         {!speechSupported && (
           <div className="browser-warning">
-            <p>⚠️ Speech recognition is not supported in this browser.</p>
-            <p>Please use Chrome, Edge, or Safari for the best experience.</p>
+            <p>{SPEECH_RECOGNITION_ERRORS.SPEECH_RECOGNITION_NOT_SUPPORTED}</p>
+            <p>{BROWSER_MESSAGES.CHROME_RECOMMENDED}</p>
           </div>
         )}
       </div>
