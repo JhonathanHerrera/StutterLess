@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
-import { SpeechData } from "./types";
+import { SpeechData } from "./types/types";
 
 const App: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
