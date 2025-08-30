@@ -1,0 +1,258 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+}
+
+.header p {
+  font-size: 1.2rem;
+  color: #666;
+  font-weight: 300;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+
+
+.hold-button-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.hold-button {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hold-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+}
+
+.hold-button:active {
+  transform: scale(0.95);
+}
+
+.hold-button.recording {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+  animation: pulse 1.5s infinite;
+}
+
+.hold-button:not(.recording) {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+
+
+.button-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+.mic-icon {
+  font-size: 3rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.button-text {
+  font-size: 1rem;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 220px;
+  height: 220px;
+  border: 3px solid rgba(255, 107, 107, 0.6);
+  border-radius: 50%;
+  animation: pulse-ring 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.transcript-section {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 15px;
+  border: 2px solid #e9ecef;
+}
+
+.transcript-section h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.transcript-box {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  min-height: 80px;
+  border: 1px solid #dee2e6;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+}
+
+.history-section {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 15px;
+  border: 2px solid #e9ecef;
+}
+
+.history-section h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.history-item {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.history-text {
+  font-size: 1rem;
+  color: #495057;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.history-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.confidence {
+  font-weight: 500;
+}
+
+.timestamp {
+  font-style: italic;
+}
+
+.browser-warning {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  color: #856404;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.browser-warning p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hold-button {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .mic-icon {
+    font-size: 2.5rem;
+  }
+  
+
+} 
