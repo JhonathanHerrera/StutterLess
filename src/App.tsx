@@ -59,7 +59,10 @@ const App: React.FC = () => {
         };
 
         recognitionRef.current.onerror = (event) => {
-          console.error("Speech recognition error:", event.error);
+          console.error(
+            SPEECH_RECOGNITION_ERRORS.SPEECH_RECOGNITION_ERROR,
+            event.error
+          );
           setIsRecording(false);
         };
 
@@ -88,7 +91,10 @@ const App: React.FC = () => {
       try {
         recognitionRef.current.start();
       } catch (error) {
-        console.error("Failed to start speech recognition:", error);
+        console.error(
+          SPEECH_RECOGNITION_ERRORS.SPEECH_RECOGNITION_START_FAILED,
+          error
+        );
         setIsRecording(false);
       }
     }
@@ -102,7 +108,10 @@ const App: React.FC = () => {
       try {
         recognitionRef.current.stop();
       } catch (error) {
-        console.error("Failed to stop speech recognition:", error);
+        console.error(
+          SPEECH_RECOGNITION_ERRORS.SPEECH_RECOGNITION_STOP_FAILED,
+          error
+        );
       }
     }
   };
