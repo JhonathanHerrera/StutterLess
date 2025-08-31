@@ -5,17 +5,22 @@ import {
   SPEECH_RECOGNITION_ERRORS,
   BROWSER_MESSAGES,
   UI_ERRORS,
-} from "./const/errors";
+} from "./const/errors_message_const";
+import {
+  DEFAULT_HISTORY_ITEMS_TO_SHOW,
+  HISTORY_ITEMS_AMOUNT,
+} from "./const/front_page_const";
 
 const App: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState<string>("");
   const [speechHistory, setSpeechHistory] = useState<SpeechData[]>([]);
   const [speechSupported, setSpeechSupported] = useState(false);
-  const [historyItemsToShow, setHistoryItemsToShow] = useState<number>(3);
+  const [historyItemsToShow, setHistoryItemsToShow] = useState<number>(
+    DEFAULT_HISTORY_ITEMS_TO_SHOW
+  );
 
   const recognitionRef = useRef<SpeechRecognition | null>(null);
-  const historyItemsAmount = [3, 5, 10, 20];
 
   useEffect(() => {
     // Initialize speech recognition
@@ -58,6 +63,10 @@ const App: React.FC = () => {
           setIsRecording(false);
         };
 
+        recognitionRef.current.onend = () => {
+          setIsRecording(false);
+        };
+
         setSpeechSupported(true);
       } catch (error) {
         console.error(
@@ -72,16 +81,29 @@ const App: React.FC = () => {
   }, []);
 
   const handleMouseDown = () => {
+    if (isRecording) return; // Prevent multiple starts
+
     setIsRecording(true);
     if (recognitionRef.current && speechSupported) {
-      recognitionRef.current.start();
+      try {
+        recognitionRef.current.start();
+      } catch (error) {
+        console.error("Failed to start speech recognition:", error);
+        setIsRecording(false);
+      }
     }
   };
 
   const handleMouseUp = () => {
+    if (!isRecording) return; // Prevent stopping if not recording
+
     setIsRecording(false);
     if (recognitionRef.current && speechSupported) {
-      recognitionRef.current.stop();
+      try {
+        recognitionRef.current.stop();
+      } catch (error) {
+        console.error("Failed to stop speech recognition:", error);
+      }
     }
   };
 
@@ -145,7 +167,7 @@ const App: React.FC = () => {
                   }
                   className="history-select"
                 >
-                  {historyItemsAmount.map((number) => (
+                  {HISTORY_ITEMS_AMOUNT.map((number) => (
                     <option value={number}>Show {number}</option>
                   ))}
                   <option value={speechHistory.length}>
