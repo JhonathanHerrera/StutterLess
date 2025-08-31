@@ -12,8 +12,10 @@ const App: React.FC = () => {
   const [transcript, setTranscript] = useState<string>("");
   const [speechHistory, setSpeechHistory] = useState<SpeechData[]>([]);
   const [speechSupported, setSpeechSupported] = useState(false);
+  const [historyItemsToShow, setHistoryItemsToShow] = useState<number>(3);
 
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const historyItemsAmount = [3, 5, 10, 20];
 
   useEffect(() => {
     // Initialize speech recognition
@@ -93,6 +95,11 @@ const App: React.FC = () => {
     handleMouseUp();
   };
 
+  const clearHistory = () => {
+    setSpeechHistory([]);
+    setTranscript("");
+  };
+
   return (
     <div className="app">
       <div className="container">
@@ -128,25 +135,57 @@ const App: React.FC = () => {
           </div>
 
           <div className="history-section">
-            <h3>Speech History</h3>
+            <div className="history-header">
+              <h3>Speech History</h3>
+              <div className="history-controls">
+                <select
+                  value={historyItemsToShow}
+                  onChange={(e) =>
+                    setHistoryItemsToShow(Number(e.target.value))
+                  }
+                  className="history-select"
+                >
+                  {historyItemsAmount.map((number) => (
+                    <option value={number}>Show {number}</option>
+                  ))}
+                  <option value={speechHistory.length}>
+                    Show All: {speechHistory.length}
+                  </option>
+                </select>
+                <button
+                  onClick={clearHistory}
+                  className="clear-history-btn"
+                  disabled={speechHistory.length === 0}
+                >
+                  🗑️ Clear History
+                </button>
+              </div>
+            </div>
             <div className="history-list">
-              {speechHistory
-                // TODO: Add a button to clear history and the # of items to show
-                //.slice(-3)
-                .reverse()
-                .map((item, index) => (
-                  <div key={index} className="history-item">
-                    <div className="history-text">{item.text}</div>
-                    <div className="history-meta">
-                      <span className="confidence">
-                        Confidence: {(item.confidence * 100).toFixed(1)}%
-                      </span>
-                      <span className="timestamp">
-                        {item.timestamp.toLocaleTimeString()}
-                      </span>
+              {speechHistory.length === 0 ? (
+                <div className="history-empty">
+                  <p>
+                    No speech history yet. Start talking to see your recordings!
+                  </p>
+                </div>
+              ) : (
+                speechHistory
+                  .slice(-historyItemsToShow)
+                  .reverse()
+                  .map((item, index) => (
+                    <div key={index} className="history-item">
+                      <div className="history-text">{item.text}</div>
+                      <div className="history-meta">
+                        <span className="confidence">
+                          Confidence: {(item.confidence * 100).toFixed(1)}%
+                        </span>
+                        <span className="timestamp">
+                          {item.timestamp.toLocaleTimeString()}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+              )}
             </div>
           </div>
         </div>
