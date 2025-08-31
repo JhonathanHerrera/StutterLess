@@ -299,6 +299,33 @@
   font-size: 0.9rem;
 }
 
+.secondary-container {
+  margin-top: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.secondary-container h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.secondary-container p {
+  font-size: 1.1rem;
+  color: #666;
+  text-align: center;
+  line-height: 1.6;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 20px;

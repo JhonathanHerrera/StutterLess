@@ -4,7 +4,7 @@ import { SpeechData } from "./types/types";
 import {
   SPEECH_RECOGNITION_ERRORS,
   BROWSER_MESSAGES,
-  UI_ERRORS,
+  UI_DEFAULT_MESSAGES,
 } from "./const/errors_message_const";
 import {
   DEFAULT_HISTORY_ITEMS_TO_SHOW,
@@ -161,7 +161,7 @@ const App: React.FC = () => {
           <div className="transcript-section">
             <h3>Your Speech</h3>
             <div className="transcript-box">
-              {transcript || UI_ERRORS.TRANSCRIPT_EMPTY}
+              {transcript || UI_DEFAULT_MESSAGES.TRANSCRIPT_EMPTY}
             </div>
           </div>
 
@@ -227,6 +227,13 @@ const App: React.FC = () => {
             <p>{BROWSER_MESSAGES.CHROME_RECOMMENDED}</p>
           </div>
         )}
+
+        <div className="secondary-container">
+          <h2>Dysfluency Detection Coming Soon</h2>
+          <p>
+            For Preview: Read this https://arxiv.org/html/2409.13582v1#bib.bib4
+          </p>
+        </div>
       </div>
     </div>
   );

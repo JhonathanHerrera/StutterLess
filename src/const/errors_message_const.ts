@@ -12,8 +12,8 @@ export const BROWSER_MESSAGES = {
   CHROME_RECOMMENDED: "Chrome is recommended for the best speech recognition experience."
 } as const;
 
-// UI Error Messages
-export const UI_ERRORS = {
+// UI Deault Messages
+export const UI_DEFAULT_MESSAGES = {
   TRANSCRIPT_EMPTY: "Your speech will appear here..."
 } as const;
 
