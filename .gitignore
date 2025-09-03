@@ -1,79 +1,41 @@
-# Dependencies
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Node/JS (if any)
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
-# Production build
-build/
-dist/
+# Virtual environments
+src/speechML/TbDD/tbdd_env/
+venv/
+.env/
+.venv/
 
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# ML artifacts
+src/speechML/pretrained/
+*.safetensors
+*.pt
+*.bin
 
-# IDE files
-.vscode/
-.idea/
+# Data and test audio
+src/speechML/testingset/
+*.wav
+*.csv
+
+# Notebooks and outputs
+*.ipynb
+.ipynb_checkpoints/
+
+# OS/editor
+.DS_Store
 *.swp
 *.swo
+.idea/
+.vscode/
 
-# OS files
-.DS_Store
-Thumbs.db
-
-# Logs
-logs
-*.log
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Coverage directory used by tools like istanbul
-coverage/
-
-# nyc test coverage
-.nyc_output
-
-# Dependency directories
-jspm_packages/
-
-# Optional npm cache directory
-.npm
-
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
-
-# next.js build output
-.next
-
-# nuxt.js build output
-.nuxt
-
-# vuepress build output
-.vuepress/dist
-
-# Serverless directories
-.serverless
-
-# FuseBox cache
-.fusebox/
-
-# DynamoDB Local files
-.dynamodb/ 
+# Build artifacts
+build/
+dist/ 
