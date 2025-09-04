@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
-from baseModelClass.baseModels import ItemIn, audioFile, audioFileList
+from baseModelClass.baseModels import audioFile, audioFileList
 from typing import List
 
 app = FastAPI()
@@ -19,20 +19,6 @@ app.add_middleware(
 # Use: curl -X GET 'http://127.0.0.1:8000/items/1'
 # Use: curl -X POST -H "Content-Type: application/json" -d '{"item": "test"}' 'http://127.0.0.1:8000/items'
 
-items = []
-
-
-@app.post("/items", response_model=List[ItemIn])
-def add_item(body: ItemIn):
-	items.append(body)
-	return items
-	
-@app.get("/items/{pos}", response_model=ItemIn)
-def get_item(pos: int):
-	# 0-based indexing with bounds guard
-	if pos < 0 or pos >= len(items):
-		raise HTTPException(status_code=404, detail="Item not found")
-	return items[pos]
 
 '''
  Audio file lookup for frontend dropdown: GET /api/id/{audio_id}
