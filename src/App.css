@@ -361,3 +361,119 @@
     margin-right: 10px;
   }
 } 
+/* Audio Selection Section */
+.audio-selection-section {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 25px;
+  border: 2px solid #e9ecef;
+}
+
+.audio-selection-section h3 {
+  margin: 0 0 15px 0;
+  color: #495057;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.audio-dropdown-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.audio-dropdown {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: white;
+  color: #495057;
+  transition: all 0.3s ease;
+}
+
+.audio-dropdown:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.audio-dropdown:disabled {
+  background: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.processing-indicator {
+  color: #667eea;
+  font-weight: 500;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.audio-result {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #dee2e6;
+  margin-top: 15px;
+}
+
+.audio-result h4 {
+  margin: 0 0 10px 0;
+  color: #495057;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.result-display {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 15px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: #495057;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 0;
+}
+
+/* Audio Player Styles */
+.audio-player {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.audio-player h4 {
+  margin: 0 0 10px 0;
+  color: #495057;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.audio-controls {
+  width: 100%;
+  max-width: 400px;
+  height: 40px;
+  border-radius: 6px;
+  background: white;
+  border: 1px solid #dee2e6;
+}
+
+.audio-controls::-webkit-media-controls-panel {
+  background-color: white;
+}
+
+.audio-controls::-webkit-media-controls-play-button,
+.audio-controls::-webkit-media-controls-pause-button {
+  background-color: #667eea;
+  border-radius: 50%;
+}

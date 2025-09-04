@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import "react-h5-audio-player/lib/styles.css";
 import "./App.css";
 import { SpeechData } from "./types/types";
 import {
@@ -9,7 +10,9 @@ import {
 import {
   DEFAULT_HISTORY_ITEMS_TO_SHOW,
   HISTORY_ITEMS_AMOUNT,
+  AUDIO_FILE_OPTIONS,
 } from "./const/front_page_const";
+import "react-h5-audio-player/lib/styles.css";
 
 const App: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -19,6 +22,10 @@ const App: React.FC = () => {
   const [historyItemsToShow, setHistoryItemsToShow] = useState<number>(
     DEFAULT_HISTORY_ITEMS_TO_SHOW
   );
+  const [selectedAudioFile, setSelectedAudioFile] = useState<string>("");
+  const [isProcessingAudio, setIsProcessingAudio] = useState<boolean>(false);
+  const [audioResult, setAudioResult] = useState<string>("");
+  const [audioSrc, setAudioSrc] = useState<string>("");
 
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
@@ -131,6 +138,45 @@ const App: React.FC = () => {
     setTranscript("");
   };
 
+  const handleAudioFileSelection = async (audioId: string) => {
+    console.log("handleAudioFileSelection called with:", audioId);
+    if (!audioId) return;
+
+    setSelectedAudioFile(audioId);
+    setIsProcessingAudio(true);
+    setAudioResult("");
+
+    try {
+      // Find the selected audio file info
+      const selectedFile = AUDIO_FILE_OPTIONS.find(
+        (file) => file.id === audioId
+      );
+      if (!selectedFile) return;
+
+      // Make API call to your FastAPI backend
+      console.log(
+        "Making API call to:",
+        `http://localhost:8000/api/id/${audioId}`
+      );
+      const response = await fetch(`http://localhost:8000/api/id/${audioId}`);
+      const result = await response.json();
+
+      setAudioResult(JSON.stringify(result, null, 2));
+
+      // Set audio source path
+      const audioPath = `/audio/${result.type}/${result.label}`;
+      setAudioSrc(audioPath);
+      console.log("Audio processing result:", result);
+    } catch (error) {
+      console.error("Error processing audio file:", error);
+      setAudioResult(
+        `Error: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
+    } finally {
+      setIsProcessingAudio(false);
+    }
+  };
+
   return (
     <div className="app">
       <div className="container">
@@ -177,7 +223,9 @@ const App: React.FC = () => {
                   className="history-select"
                 >
                   {HISTORY_ITEMS_AMOUNT.map((number) => (
-                    <option value={number}>Show {number}</option>
+                    <option key={number} value={number}>
+                      Show {number}
+                    </option>
                   ))}
                   <option value={speechHistory.length}>
                     Show All: {speechHistory.length}
@@ -188,7 +236,7 @@ const App: React.FC = () => {
                   className="clear-history-btn"
                   disabled={speechHistory.length === 0}
                 >
-                  🗑️ Clear History
+                  🗑️ Clear History 🗑️
                 </button>
               </div>
             </div>
@@ -233,6 +281,48 @@ const App: React.FC = () => {
           <p>
             For Preview: Read this https://arxiv.org/html/2409.13582v1#bib.bib4
           </p>
+
+          <div className="audio-selection-section">
+            <h3>Test Audio Files</h3>
+            <div className="audio-dropdown-container">
+              <select
+                value={selectedAudioFile}
+                onChange={(e) => handleAudioFileSelection(e.target.value)}
+                disabled={isProcessingAudio}
+                className="audio-dropdown"
+              >
+                <option value="">Select an audio file to test...</option>
+                {AUDIO_FILE_OPTIONS.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              {isProcessingAudio && (
+                <span className="processing-indicator">Processing...</span>
+              )}
+            </div>
+
+            {audioResult && (
+              <div className="audio-result">
+                <h4>Processing Result:</h4>
+                <pre className="result-display">{audioResult}</pre>
+
+                {audioSrc && (
+                  <div className="audio-player">
+                    <h4>Audio Player:</h4>
+                    <audio
+                      controls
+                      style={{ width: "100%", maxWidth: "500px" }}
+                    >
+                      <source src={audioSrc} type="audio/wav" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
